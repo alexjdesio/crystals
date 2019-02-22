@@ -7,6 +7,7 @@ public class Main_ {
 	int create_modifier = 0; // sets the base tier for what crystal is made
 	boolean automerge = false; // merges every time new crystals are added
 	
+	
 	public void merge() {
 		for(int i = 1;i<crystalQuantity.length;i++) {
 			if (crystalQuantity[i] >= 2) { 
@@ -86,6 +87,10 @@ public class Main_ {
 		Scanner scnr = new Scanner(System.in);
 		Main_ new_game = new Main_();
 		
+		identified_crystal[] identifiedArray = new identified_crystal[36];
+		int identifiedCount = 0;
+		
+		
 		while(!gameOver) {
 			menu();
 		int selection = scnr.nextInt();
@@ -106,6 +111,8 @@ public class Main_ {
 				new_game.show_available_tiers();
 				int tier = scnr.nextInt();
 					identified_crystal new_crystal = new identified_crystal(tier);
+					identifiedArray[identifiedCount] = new_crystal;
+					identifiedCount++;
 					// display the crystal stats
 					// add the crystal to the object array for crystals
 			}
