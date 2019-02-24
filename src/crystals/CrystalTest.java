@@ -33,17 +33,22 @@ public class CrystalTest {
 	**/
 	@Test
 	public void identify_36_crystals_T10() {
-		int testingVal = 500;
-		
+		int testingVal = 25;
+		int testingVal2 = 10000000;
+		new_game.admin_enable_auto();
 		new_game.modify_maxInv(testingVal);
+		new_game.showCollection = false;
 		
-		for(int i = 0;i<testingVal;i++) {
+		for(int i = 0;i<testingVal2;i++) {
 			new_game.create_crystal();
 		}
+		/**
 		for(int i = 0;i<testingVal;i++) {
 			new_game.admin_identify_crystal(10);
 		}
-		
+		**/
+		new_game.display_inventory();
+		new_game.corrupt_all();
 		new_game.display_inventory();
 		
 		assertEquals(true,true);
