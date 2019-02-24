@@ -97,7 +97,9 @@ public class Main_ {
 	}
 	
 	public void crystal_description(identified_crystal arg1) {
-		System.out.print(arg1.display_keywords(arg1.t2keywords) + arg1.display_keywords(arg1.keywords) + "T" + arg1.crystalTier + " " + arg1.crystalType);
+		System.out.print(arg1.display_keywords(arg1.t2keywords) + arg1.display_keywords(arg1.keywords));
+		System.out.print("T" + arg1.crystalTier + " " + arg1.crystalType);
+		System.out.print("(" + arg1.rating + ")");
 		System.out.println(" " + arg1.crystalPercent + "%");
 		
 	}

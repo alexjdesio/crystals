@@ -7,6 +7,7 @@ public class identified_crystal {
 	public String[] keywords;
 	public int crystalPercent;
 	public String[] t2keywords;
+	int rating;
 	
 	
 	identified_crystal(int tier){
@@ -15,6 +16,25 @@ public class identified_crystal {
 		keywords = crystal_generate_keywords(); 
 		crystalPercent = crystal_generate_percent(crystalTier, keywords);
 		t2keywords = crystal_t2keywords();
+		rating = calculate_rating();
+	}
+	
+	public int calculate_rating() {
+		int rating = 0;
+		
+		int percentCalc = crystalPercent/crystalTier;
+		percentCalc -= 3;
+		rating += percentCalc;
+		
+		if(keywords[0] != "") {
+			rating *= 100;
+		}
+		if(keywords[1] != "") {
+			rating *= 10;
+		}
+		 
+		
+		return rating;
 	}
 	
 	public String[] crystal_t2keywords() {
