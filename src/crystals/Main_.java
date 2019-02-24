@@ -3,10 +3,13 @@ import java.util.Scanner;
 import java.util.Random;
 public class Main_ {
 	//variables
-	int[] crystalQuantity = new int[20]; // 20 is the current max tier supported
 	int create_modifier = 0; // sets the base tier for what crystal is made
 	boolean automerge = false; // merges every time new crystals are added
-	
+	int maxInvSize = 36;
+	final int maxCrystalTier = 20;
+	int[] crystalQuantity = new int[20]; // 20 is the current max tier supported
+	identified_crystal[] identifiedArray = new identified_crystal[maxInvSize];
+	int identifiedCount = 0;
 	
 	public void merge() {
 		for(int i = 1;i<crystalQuantity.length;i++) {
@@ -19,6 +22,11 @@ public class Main_ {
 			collection();
 		}
 		
+	}
+	
+	public void modify_maxInv(int arg1) {
+		maxInvSize = arg1;
+		identifiedArray = new identified_crystal[maxInvSize]; // wipes the inv
 	}
 	
 	public void automerge() {
@@ -81,15 +89,63 @@ public class Main_ {
 		// add 1 to the dust array at the appropriate tier
 	}
 	
+	public void identify_crystal(int tier) {
+		identified_crystal new_crystal = new identified_crystal(tier);
+		crystal_description(new_crystal);
+		identifiedArray[identifiedCount] = new_crystal;
+		identifiedCount++;
+	}
+	
+	public void crystal_description(identified_crystal arg1) {
+		System.out.print(arg1.display_keywords(arg1.t2keywords) + arg1.display_keywords(arg1.keywords) + "T" + arg1.crystalTier + " " + arg1.crystalType);
+		System.out.println(" " + arg1.crystalPercent + "%");
+		
+	}
+	
+	public void menu_identify_crystal(Scanner scnr) {
+		System.out.println("What tier would you like to identify?");
+		show_available_tiers();
+		int tier = scnr.nextInt();
+		if((crystalQuantity[tier]>0) && (identifiedCount<maxInvSize)) {
+			identify_crystal(tier);
+		}
+		else {
+			System.out.println("Not enough unidentified T" + tier + " crystals.");
+		}
+		
+	}
+	
+	public void menu_identify_crystal(int tier) {
+		if((crystalQuantity[tier]>0) && (identifiedCount<maxInvSize)) {
+			identify_crystal(tier);
+		}
+		else {
+			System.out.println("Not enough unidentified T" + tier + " crystals.");
+		}
+		
+	}
+	
+	public void admin_identify_crystal(int tier) {
+		identified_crystal new_crystal = new identified_crystal(tier);
+		crystal_description(new_crystal);
+		identifiedArray[identifiedCount] = new_crystal;
+		identifiedCount++;
+	}
+	
+	public void display_inventory() {
+		// displays all identified crystals
+		for(int i = 0;i<maxInvSize;i++) {
+			if(identifiedArray[i] != null) {
+				crystal_description(identifiedArray[i]);
+			}
+		}
+		
+	}
 	
 	public static void main(String[] args) {
 		boolean gameOver = false;
 		Scanner scnr = new Scanner(System.in);
 		Main_ new_game = new Main_();
-		
-		identified_crystal[] identifiedArray = new identified_crystal[36];
-		int identifiedCount = 0;
-		
 		
 		while(!gameOver) {
 			menu();
@@ -106,15 +162,22 @@ public class Main_ {
 			if (selection == 3) {
 				new_game.collection();
 			}
+			
+			if (selection == 4) {
+				
+			}
+			
 			if (selection == 6) {
-				System.out.println("What tier would you like to identify?");
-				new_game.show_available_tiers();
-				int tier = scnr.nextInt();
-					identified_crystal new_crystal = new identified_crystal(tier);
-					identifiedArray[identifiedCount] = new_crystal;
-					identifiedCount++;
-					// display the crystal stats
-					// add the crystal to the object array for crystals
+				new_game.menu_identify_crystal(scnr);
+
+			}
+			
+			if (selection == 7) {
+				new_game.display_inventory(); 
+			}
+			
+			if (selection == 8) {
+				new_game.automerge = true; // enables automerge
 			}
 			
 		}

@@ -2,19 +2,56 @@ package crystals;
 import java.util.Random;
 public class identified_crystal {
 	Random rand = new Random();
+	public int crystalTier;
+	public String crystalType;
+	public String[] keywords;
+	public int crystalPercent;
+	public String[] t2keywords;
+	
 	
 	identified_crystal(int tier){
-		int crystalTier = tier;
-		String crystalType = crystal_generate_type();
-		String[] keywords = crystal_generate_keywords(); 
-		int crystalPercent = crystal_generate_percent(crystalTier, keywords);
+		crystalTier = tier;
+		crystalType = crystal_generate_type();
+		keywords = crystal_generate_keywords(); 
+		crystalPercent = crystal_generate_percent(crystalTier, keywords);
+		t2keywords = crystal_t2keywords();
 	}
+	
+	public String[] crystal_t2keywords() {
+		String[] returnArray = new String[10];
+		
+		for(int i = 0;i<10;i++) {
+			returnArray[i] = "";
+		}
+		//Order for this Array: Perfect (Prismatic/Illustrious)
+		
+		int maxPercent = this.crystalTier * 15;
+		if(this.crystalPercent == maxPercent) {
+			returnArray[1] = "Prismatic";
+		}
+		
+		else if (this.crystalPercent>maxPercent) {
+			returnArray[2] = "Illustrious";
+			int perfectPercent = (maxPercent + maxPercent/10);
+			if(this.crystalPercent == perfectPercent) {
+				returnArray[0] = "Perfect";
+			}
+		}
+		
+		
+		
+		return returnArray;
+	}
+	
 	
 	public String display_keywords(String[] inputArray) {
 		String output = "";
 		for(int i = 0;i<inputArray.length;i++) {
 			output += inputArray[i];
-			output += " ";
+			if(inputArray[i] != "") {
+				output += " ";
+			}
+			
 		}
 		
 		return output;
@@ -70,18 +107,29 @@ public class identified_crystal {
 	
 	public String[] crystal_generate_keywords() {
 		//Options: normal, primal, ancient, primal ancient
-		String[] keywords = new String[2];
+		String[] keywords = new String[10];
 		
 		//roll from 1 to 100
 			// if 1, primal
-		if(true) {
-			keywords[0] = "primal";
+		for(int i = 0;i<10;i++) {
+			keywords[i] = "";
+		}
+		
+		
+		int primalRoll = rand.nextInt(100);
+		
+
+		
+		if(primalRoll == 1) {
+			keywords[0] = "Primal";
 		}
 		
 		//roll from 1 to 10
 		// if 1, ancient
-		if(true) {
-			keywords[1] = "ancient";
+		int ancientRoll = rand.nextInt(10);
+		
+		if(ancientRoll == 1) {
+			keywords[1] = "Ancient";
 			
 		}
 
