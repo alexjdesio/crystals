@@ -10,7 +10,9 @@ public class identified_crystal {
 	boolean corrupted;
 	int rating;
 	
-	
+	/*
+	 * Constructor
+	 */
 	identified_crystal(int tier){
 		crystalTier = tier;
 		crystalType = crystal_generate_type();
@@ -21,7 +23,9 @@ public class identified_crystal {
 		corrupted = false;
 	}
 
-	
+	/*
+	 * Calculates the crystal rating based on the percentage, tier, and keywords.
+	 */
 	public int calculate_rating() {
 		int rating = 0;
 		
@@ -40,6 +44,12 @@ public class identified_crystal {
 		return rating;
 	}
 	
+	/*
+	 * Checks for t2 keywords, which are dependent on the "Perfection" level of the crystal
+	 * Prismatic-> Percentage is the original maximum
+	 * Illustrious-> Percentage is above the original maximum(Primal)
+	 * Perfect-> Percentage was at the original maximum, and then rolled Primal.
+	 */
 	public String[] crystal_t2keywords() {
 		String[] returnArray = new String[10];
 		
@@ -66,7 +76,9 @@ public class identified_crystal {
 		return returnArray;
 	}
 	
-	
+	/*
+	 * Displays the keywords for the array as a string.
+	 */
 	public String display_keywords(String[] inputArray) {
 		String output = "";
 		for(int i = 0;i<inputArray.length;i++) {
@@ -80,6 +92,9 @@ public class identified_crystal {
 		return output;
 	}
 	
+	/*
+	 * Chooses the randomly selected type of crystal.
+	 */
 	public String crystal_generate_type() {
 		String type = "";
 		int typeValue = rand.nextInt(3);
@@ -100,6 +115,18 @@ public class identified_crystal {
 		return type;
 	}
 	
+	/*
+	 * Calculates the percentage of the crystal using the tier and keywords.
+	 * If Ancient, adds 10% to the rolled percent but cannot pass the maximum percentage for the tier
+	 * If Primal, adds 10% to the rolled percent and can pass the maximum percentage for the tier.
+	 * 
+	 * Ancient= 1/10
+	 * Primal = 1/100
+	 * 
+	 * Primal Ancient = 1/1000
+	 * Perfect Illustrious Primal Ancient = 1/13000
+	 * Perfect+ Illustrious Primal Ancient = 1/52000
+	 */
 	public int crystal_generate_percent(int tier, String[] keywords) {
 		int percent = 0;
 		int maxPercent = tier*15; // equals tier * 15
@@ -127,7 +154,10 @@ public class identified_crystal {
 		return percent;
 	}
 	
-	
+	/*
+	 * Generates the keywords Primal(1/10) and Ancient(1/100).
+	 * Primal Ancient is also possible(1/1000).
+	 */
 	public String[] crystal_generate_keywords() {
 		//Options: normal, primal, ancient, primal ancient
 		String[] keywords = new String[10];

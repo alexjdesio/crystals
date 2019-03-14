@@ -31,10 +31,11 @@ public class CrystalTest {
 		assertEquals(true,true);
 	}
 	**/
+	/**
 	@Test
 	public void identify_36_crystals_T10() {
-		int testingVal = 25;
-		int testingVal2 = 10000000;
+		int testingVal = 20;
+		int testingVal2 = 500000;
 		new_game.admin_enable_auto();
 		new_game.modify_maxInv(testingVal);
 		new_game.showCollection = false;
@@ -42,15 +43,32 @@ public class CrystalTest {
 		for(int i = 0;i<testingVal2;i++) {
 			new_game.create_crystal();
 		}
-		/**
-		for(int i = 0;i<testingVal;i++) {
-			new_game.admin_identify_crystal(10);
-		}
-		**/
-		new_game.display_inventory();
+
+		//new_game.display_inventory();
 		new_game.corrupt_all();
 		new_game.display_inventory();
 		
 		assertEquals(true,true);
 	}
+	**/
+	@Test
+	public void sellAllTest() {
+		new_game.admin_enable_auto(); // sets all 'auto' booleans to true for testing
+		new_game.autosell = true;
+		new_game.autoIdentifyTier = 5;
+		new_game.showCollection = false;
+		
+		for(int i = 0;i<40000;i++) {
+			new_game.create_crystal();
+		}
+		
+		new_game.sort_crystals();
+		//new_game.corrupt_all();
+		new_game.display_inventory();
+		System.out.println(new_game.money);
+		new_game.sell_all();
+		System.out.println(new_game.money);
+		
+	}
+	
 }
